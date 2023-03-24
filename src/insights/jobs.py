@@ -40,7 +40,13 @@ def get_unique_job_types(path: str) -> List[str]:
     list
         List of unique job types
     """
-    raise NotImplementedError
+    unique_jobs = []
+    with open(path, 'r') as file:
+        jobs_reader = csv.DictReader(file, delimiter=",", quotechar='"')
+        for row in jobs_reader:
+            if row['job_type'] not in unique_jobs:
+                unique_jobs.append(row['job_type'])
+    return unique_jobs
 
 
 def filter_by_job_type(jobs: List[Dict], job_type: str) -> List[Dict]:
@@ -58,4 +64,10 @@ def filter_by_job_type(jobs: List[Dict], job_type: str) -> List[Dict]:
     list
         List of jobs with provided job_type
     """
-    raise NotImplementedError
+    jobs_filtered = []
+    for job in jobs:
+        if job['job_type'] == job_type:
+            jobs_filtered.append(job)
+
+    
+    return jobs_filtered
