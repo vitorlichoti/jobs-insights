@@ -1,6 +1,7 @@
 from typing import Union, List, Dict
 import csv
 
+
 def get_max_salary(path: str) -> int:
     """Get the maximum salary of all jobs
 
