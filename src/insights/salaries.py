@@ -1,5 +1,5 @@
 from typing import Union, List, Dict
-
+import csv
 
 def get_max_salary(path: str) -> int:
     """Get the maximum salary of all jobs
@@ -16,7 +16,14 @@ def get_max_salary(path: str) -> int:
     int
         The maximum salary paid out of all job opportunities
     """
-    raise NotImplementedError
+    salary = []
+    with open(path, 'r') as file:
+        jobs_reader = csv.DictReader(file, delimiter=",", quotechar='"')
+        for jobs in jobs_reader:
+            if jobs['max_salary'] != '':
+                salary.append(int(jobs['max_salary']))
+
+    return max(salary)
 
 
 def get_min_salary(path: str) -> int:
