@@ -20,7 +20,7 @@ def get_max_salary(path: str) -> int:
     with open(path, 'r') as file:
         jobs_reader = csv.DictReader(file, delimiter=",", quotechar='"')
         for jobs in jobs_reader:
-            if jobs['max_salary'] != '':
+            if jobs['max_salary'] != '' and not jobs['max_salary'].isalpha():
                 salary.append(int(jobs['max_salary']))
 
     return max(salary)
@@ -41,7 +41,14 @@ def get_min_salary(path: str) -> int:
     int
         The minimum salary paid out of all job opportunities
     """
-    raise NotImplementedError
+    salary = []
+    with open(path, 'r') as file:
+        jobs_reader = csv.DictReader(file, delimiter=",", quotechar='"')
+        for jobs in jobs_reader:
+            if jobs['min_salary'] != '' and not jobs['min_salary'].isalpha():
+                salary.append(int(jobs['min_salary']))
+
+    return min(salary)
 
 
 def matches_salary_range(job: Dict, salary: Union[int, str]) -> bool:
