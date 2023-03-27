@@ -77,16 +77,17 @@ def matches_salary_range(job: Dict, salary: Union[int, str]) -> bool:
     """
     if 'min_salary' not in job or 'max_salary' not in job:
         raise ValueError('As chaves sao obrigatorias')
+    print(job['max_salary'], job['min_salary'], salary)
     if not isinstance(
             job['min_salary'],
             Union[int, str]) or not isinstance(
-                job['max_salary'],
-                Union[int, str]) or not isinstance(salary, Union[int, str]):
+            job['max_salary'],
+            Union[int, str]) or not isinstance(salary, Union[int, str]):
         raise ValueError('Os valores devem ser numericos')
     if int(job['min_salary']) > int(job['max_salary']):
         raise ValueError('min_salary é maior que max_salary')
     if int(salary) >= int(job['min_salary']) and int(salary) <= int(
-                job['max_salary']):
+            job['max_salary']):
         return True
     else:
         return False
@@ -110,4 +111,13 @@ def filter_by_salary_range(
     list
         Jobs whose salary range contains `salary`
     """
-    raise NotImplementedError
+    result = []
+    for job in jobs:
+        if int(job['min_salary']) < int(job['max_salary']) and isinstance(
+                salary, Union[str, int]):
+            if salary != '':
+                if matches_salary_range(
+                    {'min_salary': job['min_salary'],
+                        'max_salary': job['max_salary']}, salary):
+                    result.append(job)
+    return result
